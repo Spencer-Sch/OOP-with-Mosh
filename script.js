@@ -47,22 +47,31 @@
 //     console.log('Circle has a radius.');
 
 ////////////////////////////////////////////////////////
-// Pick up at 46:11
-// https://www.youtube.com/watch?v=PFmuCDHHpwk
+
 function Circle(radius) {
     this.radius = radius;
 
-    this.defautlLocation = { x: 0, y: 0};
+    let defautlLocation = { x: 0, y: 0};
 
-    this.computeOptimumLocation = function() {
-        // ...
+    this.getDefaultLocation = function() {
+        return defautlLocation;
     }
-
     this.draw = function() {
-        this.computeOptimumLocation();
-
         console.log('draw');
     }
+
+    Object.defineProperty(this, 'defaultLocation', {
+        get: function() {
+            return defautlLocation;
+        },
+        set: function(value) {
+            if (!value.x || !value.y) {
+                throw new Error('Invalid location.');
+            }
+            defautlLocation = value;
+        }
+    });
 }
 
 const circle = new Circle(1);
+circle.draw();
